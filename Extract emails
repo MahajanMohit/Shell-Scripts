@@ -1,0 +1,10 @@
+#!/bin/bash
+#email=$1
+email="abc, def <abc.com>; def, kgf <kgf.com>; crd, fdm <ccs.com>"
+mail=$(cat email | tr ";" " " | tr "," " ")
+for var in $mail; do echo $var >> test_file; done
+grep "<" test_file >test_file1
+cat test_file1 | cut -d "<" -f2 | cut -d ">" -f1>test_file2
+cat test_file2 | tr -t "\n" ";">email
+echo '\n'>>email
+rm -rf test_file1 test_file test_file2
