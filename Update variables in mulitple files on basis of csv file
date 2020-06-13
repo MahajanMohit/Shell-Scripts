@@ -1,0 +1,25 @@
+#**************************************************************************
+#* File Name   : Parm_file.sh						                      *
+#* Description : To update parameter files tnrough csv file		          *
+#* Created By  : Mohit Mahajan						                      *
+#* Created on  : 15-06-2020						                          *
+#**************************************************************************
+rm -rf Log_file
+echo "-----------`date`-----------------">Log_file
+for line in $(cat test.csv); 
+do  
+	lib=$(echo $line|cut -d ',' -f1)
+	#echo $lib
+	loc=$(echo $line|cut -d ',' -f2)
+	#echo $loc
+	par=$(echo $line|cut -d ',' -f3)
+	#echo $par
+
+	sed -i "s/\$\$DTDSL=.*/\$\$DTDSL=\"$lib\"/" $par
+	sed -i "s/\$\$LOCATION_NM=.*/\$\$LOCATION_NM=$loc/" $par
+	sed -i "s/\$\$LIBRARY_NM=.*/\$\$LIBRARY_NM=$lib/" $par
+
+	cat $par >> Log_file
+	echo "---------------------------------------------------------">> Log_file
+
+done
